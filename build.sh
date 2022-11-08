@@ -9,9 +9,8 @@ if [ -z "$VERSION" ]; then
     exit 1
 fi
 
-docker buildx build \
-  --push \
-  --platform linux/amd64 \
-  --build-arg VERSION=${VERSION} \
-  --tag geekdada/snell-server:$VERSION \
-  .
+docker buildx build --progress=plain \
+     --platform linux/amd64,linux/arm64 \
+     --build-arg VERSION=${VERSION} \
+     --output type=image,name=type=image,push=true \
+     -t g67261831/snell-server-docker . --no-cache

@@ -7,7 +7,8 @@ COPY get_url.sh /get_url.sh
 ARG TARGETPLATFORM
 ARG VERSION
 
-RUN xx-info env && wget -q -O "snell-server.zip" $(/get_url.sh ${VERSION} $(xx-info arch)) && \
+RUN ./get_url.sh ${VERSION} $(xx-info arch)
+RUN xx-info env && wget -q -O snell-server.zip $(./get_url.sh ${VERSION} $(xx-info arch)) && \
     unzip snell-server.zip && rm snell-server.zip && \
     xx-verify /snell-server
 
