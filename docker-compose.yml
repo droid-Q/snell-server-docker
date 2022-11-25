@@ -1,0 +1,28 @@
+version: '2.4'
+
+services:
+  snell-server:
+    image: geekdada/snell-server:4.0.0
+    restart: unless-stopped
+    networks:
+      - snell
+    environment:
+      - PSK=password # Change here
+
+  shadow-tls:
+    image: ghcr.io/ihciah/shadow-tls:latest
+    restart: unless-stopped
+    ports:
+      - "9443:9443" # Change to your own port
+    networks:
+      - snell
+    environment:
+      - MODE=server
+      - LISTEN=:::9443
+      - SERVER=snell-server:9102
+      - TLS=cloud.tencent.com # Change here
+      - PASSWORD=password # Change here
+
+networks:
+  snell:
+    driver: bridge
